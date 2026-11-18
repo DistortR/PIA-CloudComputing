@@ -1,0 +1,29 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/app.test.js:
+(pass) lee host y puerto del entorno [0.10ms]
+(pass) rechaza puertos fuera de rango o no enteros [0.10ms]
+(pass) lee los tres metadatos de construcción [0.01ms]
+(pass) rechaza metadatos faltantes [0.01ms]
+(pass) crea un ítem con el nombre normalizado [0.02ms]
+(pass) rechaza nombres inválidos [0.03ms]
+(pass) las sondas distinguen vitalidad, disponibilidad y cierre [0.53ms]
+(pass) expone los metadatos de la instancia [0.17ms]
+(pass) crea, lista y mantiene aislados los ítems de cada instancia [0.24ms]
+(pass) rechaza JSON malformado y nombres inválidos sin guardar ítems [0.11ms]
+(pass) expone conteos, duración y una etiqueta fija para rutas desconocidas [0.35ms]
+(pass) registra respuestas 500 ante una excepción inesperada [0.19ms]
+(pass) conecta el servidor al puerto configurado y marca el cierre [0.17ms]
+----------------|---------|---------|-------------------
+File            | % Funcs | % Lines | Uncovered Line #s
+----------------|---------|---------|-------------------
+All files       |  100.00 |   93.94 |
+ app/api.js     |  100.00 |  100.00 | 
+ app/metrics.js |  100.00 |  100.00 | 
+ app/server.js  |  100.00 |   81.82 | 23-26
+----------------|---------|---------|-------------------
+
+ 13 pass
+ 0 fail
+ 47 expect() calls
+Ran 13 tests across 1 file. [5.00ms]

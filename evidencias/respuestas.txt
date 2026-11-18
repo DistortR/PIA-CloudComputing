@@ -1,0 +1,87 @@
+Peticiones directas al manejador, con metadatos de ejemplo
+GET /health 200 application/json;charset=utf-8
+{"status":"ok"}
+GET /ready 200 application/json;charset=utf-8
+{"status":"ready"}
+GET /version 200 application/json;charset=utf-8
+{"version":"1.0.0","commit_sha":"a3f9c1b","build_date":"2026-11-18T16:00:00Z"}
+GET /api/items 200 application/json;charset=utf-8
+[]
+POST /api/items 201 application/json;charset=utf-8
+{"id":1,"name":"vendas"}
+GET /api/items 200 application/json;charset=utf-8
+[{"id":1,"name":"vendas"}]
+POST /api/items 422 application/json;charset=utf-8
+{"error":"name debe ser un texto no vacío"}
+GET /metrics 200 text/plain; version=0.0.4; charset=utf-8
+# HELP http_requests_total Total de peticiones HTTP.
+# TYPE http_requests_total counter
+http_requests_total{method="GET",route="/health",status="200",version="1.0.0-a3f9c1b"} 1
+http_requests_total{method="GET",route="/ready",status="200",version="1.0.0-a3f9c1b"} 1
+http_requests_total{method="GET",route="/version",status="200",version="1.0.0-a3f9c1b"} 1
+http_requests_total{method="GET",route="/api/items",status="200",version="1.0.0-a3f9c1b"} 2
+http_requests_total{method="POST",route="/api/items",status="201",version="1.0.0-a3f9c1b"} 1
+http_requests_total{method="POST",route="/api/items",status="422",version="1.0.0-a3f9c1b"} 1
+# HELP http_request_duration_seconds Duracion de peticiones HTTP en segundos.
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="0.005"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="0.01"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="0.05"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="0.1"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="0.25"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="0.5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="1"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="2.5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/health",version="1.0.0-a3f9c1b",le="+Inf"} 1
+http_request_duration_seconds_sum{method="GET",route="/health",version="1.0.0-a3f9c1b"} 0.000040623000000000075
+http_request_duration_seconds_count{method="GET",route="/health",version="1.0.0-a3f9c1b"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="0.005"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="0.01"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="0.05"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="0.1"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="0.25"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="0.5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="1"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="2.5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/ready",version="1.0.0-a3f9c1b",le="+Inf"} 1
+http_request_duration_seconds_sum{method="GET",route="/ready",version="1.0.0-a3f9c1b"} 0.00001590099999999994
+http_request_duration_seconds_count{method="GET",route="/ready",version="1.0.0-a3f9c1b"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="0.005"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="0.01"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="0.05"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="0.1"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="0.25"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="0.5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="1"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="2.5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="5"} 1
+http_request_duration_seconds_bucket{method="GET",route="/version",version="1.0.0-a3f9c1b",le="+Inf"} 1
+http_request_duration_seconds_sum{method="GET",route="/version",version="1.0.0-a3f9c1b"} 0.000011998999999999871
+http_request_duration_seconds_count{method="GET",route="/version",version="1.0.0-a3f9c1b"} 1
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="0.005"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="0.01"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="0.05"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="0.1"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="0.25"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="0.5"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="1"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="2.5"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="5"} 2
+http_request_duration_seconds_bucket{method="GET",route="/api/items",version="1.0.0-a3f9c1b",le="+Inf"} 2
+http_request_duration_seconds_sum{method="GET",route="/api/items",version="1.0.0-a3f9c1b"} 0.00001384400000000019
+http_request_duration_seconds_count{method="GET",route="/api/items",version="1.0.0-a3f9c1b"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="0.005"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="0.01"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="0.05"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="0.1"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="0.25"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="0.5"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="1"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="2.5"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="5"} 2
+http_request_duration_seconds_bucket{method="POST",route="/api/items",version="1.0.0-a3f9c1b",le="+Inf"} 2
+http_request_duration_seconds_sum{method="POST",route="/api/items",version="1.0.0-a3f9c1b"} 0.0001223550000000002
+http_request_duration_seconds_count{method="POST",route="/api/items",version="1.0.0-a3f9c1b"} 2
+
