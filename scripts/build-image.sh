@@ -18,5 +18,5 @@ git -C "$root" archive "$commit" Dockerfile .dockerignore app |
   docker build --build-arg "APP_VERSION=$version" \
     --build-arg "APP_COMMIT_SHA=$commit" \
     --build-arg "APP_BUILD_DATE=$build_date" \
-    --tag "$image" -
+    --tag "$image" - >&2
 printf '%s\n' "$image"

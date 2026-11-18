@@ -1,0 +1,14 @@
+SonarQube Community Build 26.11.0.134175
+Proyecto temporal: medisur-ci-smoke
+Reporte importado: coverage/lcov.info
+Cobertura devuelta por SonarQube: 97.0 %
+
+Umbral temporal de cobertura total: 100 %
+17:24:55.386 ERROR QUALITY GATE STATUS: FAILED
+
+Umbral corregido de cobertura total: 60 %
+17:25:09.343 INFO  QUALITY GATE STATUS: PASSED
+17:25:09.419 INFO  EXECUTION SUCCESS
+
+Prueba realizada con SonarScanner y el Quality Gate real en localhost.
+El contenedor temporal se detuvo al terminar la prueba.
