@@ -4,7 +4,7 @@
 
 **Aplicación piloto · API, variables de entorno, versión, métricas y pruebas**
 
-### Avances
+### Paso 1 · Aplicación piloto
 
 1. Revisé la consigna y el reparto del equipo. Definí los contratos que la aplicación entrega a quienes preparan la imagen, el pipeline, Kubernetes y el monitoreo.
 2. Implementé la API en JavaScript con Bun 1.4.3. La consigna deja libre el lenguaje. El plan inicial planteaba Python, pero el entorno bloqueó la descarga de sus dependencias y Bun permitió completar el servicio y su verificación sin paquetes externos.
@@ -33,16 +33,20 @@
 | **4. Kubernetes y entrega** | Configurar las sondas en `/health` y `/ready` y comprobar que `/version` cambia tras el despliegue y recupera el SHA anterior tras el rollback. |
 | **5. Infraestructura y monitoreo** | Recoger `/metrics` de ambas réplicas y conectar el contador y el histograma con los paneles de Grafana. |
 
-## ===== PARTE 2 =====
+### Paso 2 · Repositorio e imagen
 
 **Repositorio e imagen · ramas, Docker y GHCR**
 
-1. Dejé los cambios de la Parte 2 en `main`, pendientes de commit.
+1. El Paso 2 se subió a `main` en el commit `8248ffb`.
 2. Agregué un [Dockerfile multietapa](Dockerfile). La etapa de build compila el servicio con Bun 1.4.3. La etapa final copia el ejecutable a Debian slim y configura el usuario `10001:10001`, el puerto 8080 y los metadatos de construcción. El [filtro del contexto](.dockerignore) permite el Dockerfile y el código necesario para compilar.
 3. Agregué [el comando de construcción](scripts/build-image.sh). Empaqueta el árbol del commit exacto, genera la fecha UTC y etiqueta para GHCR con versión y SHA corto. Rechaza `latest` como versión. Verifiqué con un Docker simulado los argumentos y que el contexto excluye los cambios locales. Jenkins podrá invocarlo al pasar la puerta de calidad.
 4. Compilé el ejecutable en el host y verifiqué las seis rutas por HTTP con `curl`, además de la coincidencia del SHA y el cierre con `SIGTERM`. Guardé la [salida de la prueba](evidencias/binario-http.txt). Esa prueba cubrió el ejecutable compilado. La imagen completa requiere acceso al daemon de Docker.
-5. Dejé en el [README](README.md) los pasos de verificación del usuario del contenedor, metadatos, publicación privada y protección de `main`. El build en Docker, el push a GHCR y la protección remota quedan pendientes de verificación con acceso al daemon y a GitHub.
+5. Dejé en el [README](README.md) los pasos de verificación del usuario del contenedor, metadatos, publicación privada y protección de `main`.
 
 **Uso de IA.** Codex preparó la receta de empaquetado, el script y la documentación. Se usó para reducir pasos manuales y probar que los metadatos coinciden con el commit. Se ajustó la verificación para ejecutar el binario por HTTP cuando Docker no estuvo accesible.
 
-**Verificación posterior en Docker.** Construí `medisur:prueba-local` con el Dockerfile multietapa y ejecuté la imagen. Comprobé que corre con UID y GID 10001 y que la etapa final carece de `bun`, `gcc`, `cc` y `make`. Validé las seis rutas por HTTP, incluidos los tres metadatos de build y las métricas después de crear un ítem. La [evidencia de Docker](evidencias/docker-local.txt) corresponde a una etiqueta de prueba local. Siguen pendientes la publicación en GHCR desde un commit y la protección remota de `main`.
+**Verificación posterior en Docker.** Construí `medisur:prueba-local` con el Dockerfile multietapa y ejecuté la imagen. Comprobé que corre con UID y GID 10001 y que la etapa final carece de `bun`, `gcc`, `cc` y `make`. Validé las seis rutas por HTTP, incluidos los tres metadatos de build y las métricas después de crear un ítem. La [evidencia de Docker](evidencias/docker-local.txt) corresponde a una etiqueta de prueba local. Después se construyó y publicó la imagen desde el commit `8248ffb`.
+
+**Publicación en GHCR.** Se publicó `ghcr.io/distortr/pia-cloudcomputing:1.0.0-8248ffb`. La descarga autenticada devolvió el mismo digest que la publicación, `sha256:cd61a4566c64313abcd6f659e829eae812e544c6d5a4988ca963f2981f6fabc0`. El titular de la cuenta confirmó que el paquete aparece como privado en GitHub. Usar la etiqueta `1.0.0-8248ffb` en el despliegue.
+
+**Pendiente.** Configurar la protección de `main` y el flujo de PR con el equipo.
