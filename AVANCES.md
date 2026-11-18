@@ -32,3 +32,17 @@
 | **3. CI y calidad** | Ejecutar `bun test` desde la raíz y comprobar que SonarQube importa `coverage/lcov.info` con `sonar.javascript.lcov.reportPaths`. El reporte se genera en cada ejecución. |
 | **4. Kubernetes y entrega** | Configurar las sondas en `/health` y `/ready` y comprobar que `/version` cambia tras el despliegue y recupera el SHA anterior tras el rollback. |
 | **5. Infraestructura y monitoreo** | Recoger `/metrics` de ambas réplicas y conectar el contador y el histograma con los paneles de Grafana. |
+
+## ===== PARTE 2 =====
+
+**Repositorio e imagen · ramas, Docker y GHCR**
+
+1. Dejé los cambios de la Parte 2 en `main`, pendientes de commit.
+2. Agregué un [Dockerfile multietapa](Dockerfile). La etapa de build compila el servicio con Bun 1.4.3. La etapa final copia el ejecutable a Debian slim y configura el usuario `10001:10001`, el puerto 8080 y los metadatos de construcción. El [filtro del contexto](.dockerignore) permite el Dockerfile y el código necesario para compilar.
+3. Agregué [el comando de construcción](scripts/build-image.sh). Empaqueta el árbol del commit exacto, genera la fecha UTC y etiqueta para GHCR con versión y SHA corto. Rechaza `latest` como versión. Verifiqué con un Docker simulado los argumentos y que el contexto excluye los cambios locales. Jenkins podrá invocarlo al pasar la puerta de calidad.
+4. Compilé el ejecutable en el host y verifiqué las seis rutas por HTTP con `curl`, además de la coincidencia del SHA y el cierre con `SIGTERM`. Guardé la [salida de la prueba](evidencias/binario-http.txt). Esa prueba cubrió el ejecutable compilado. La imagen completa requiere acceso al daemon de Docker.
+5. Dejé en el [README](README.md) los pasos de verificación del usuario del contenedor, metadatos, publicación privada y protección de `main`. El build en Docker, el push a GHCR y la protección remota quedan pendientes de verificación con acceso al daemon y a GitHub.
+
+**Uso de IA.** Codex preparó la receta de empaquetado, el script y la documentación. Se usó para reducir pasos manuales y probar que los metadatos coinciden con el commit. Se ajustó la verificación para ejecutar el binario por HTTP cuando Docker no estuvo accesible.
+
+**Verificación posterior en Docker.** Construí `medisur:prueba-local` con el Dockerfile multietapa y ejecuté la imagen. Comprobé que corre con UID y GID 10001 y que la etapa final carece de `bun`, `gcc`, `cc` y `make`. Validé las seis rutas por HTTP, incluidos los tres metadatos de build y las métricas después de crear un ítem. La [evidencia de Docker](evidencias/docker-local.txt) corresponde a una etiqueta de prueba local. Siguen pendientes la publicación en GHCR desde un commit y la protección remota de `main`.

@@ -1,0 +1,9 @@
+Prueba en localhost del ejecutable compilado con Bun 1.4.3.
+El SHA corresponde al código de la Parte 1 y la fecha es de prueba.
+
+{"status":"ok"}
+{"status":"ready"}
+{"version":"1.0.0","commit_sha":"1901ffcd4c49ae51cc6f2caac51aa501cad61ba7","build_date":"2026-11-18T16:00:00Z"}
+http_requests_total{method="POST",route="/api/items",status="422",version="1.0.0-1901ffcd4c49ae51cc6f2caac51aa501cad61ba7"} 1
+http_request_duration_seconds_count{method="GET",route="/api/items",version="1.0.0-1901ffcd4c49ae51cc6f2caac51aa501cad61ba7"} 2
+Seis rutas verificadas por HTTP y cierre SIGTERM correcto.
